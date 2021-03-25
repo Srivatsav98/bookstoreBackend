@@ -55,7 +55,7 @@ module.exports = function (router) {
         });
     })  
     
-    router.get("/:id",(req,res)=>{
+    router.get("/search/:id",(req,res)=>{
         Standup.find(
             {$or:[
                 {"author":{'$regex': req.params.id,$options:'i'}},
