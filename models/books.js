@@ -6,6 +6,7 @@ const bookSchema = new mongoose.Schema({
     price: { type: Number},
     year: { type: String},
     rating: { type: Number},
+    publisher:{type:String},
     createOn: { type: Date, default: Date.now }
 })
 

@@ -1,5 +1,5 @@
 const Book = require('../../models/books')
-
+mongo = require('mongodb')
 module.exports = function (router) {
 
     // POST: Get meeting note document...
@@ -13,9 +13,31 @@ module.exports = function (router) {
         })
     })
 
+
+
     router.get('/',(req,res)=>{
         res.send(Date.now().toString());
     })
+
+
+    router.put('/update/:id', function(req, res) {
+        var bookId = req.params.id;
+        Book.updateOne({ _id: new mongo.ObjectId(bookId)}, req.body, function (err, result) {
+            if (err) return res.status(400).json(err)
+            else return res.send(result);
+        });
+    });
+
+    router.delete('/delete/:id', function (req, res) {
+        var id = req.params.id;      
+        Book.deleteOne({ _id: new mongo.ObjectId(id) }, function (err, result) {
+            if (err) return res.status(400).json(err)
+            else return res.send(result);
+
+        });        
+      });
+
+    
 
     router.get('/popular',(req,res)=>{
         Book.find().collation({'locale':'en'}).sort({rating:-1}).then((err,result)=>{
@@ -26,6 +48,8 @@ module.exports = function (router) {
             res.send(result);
         });
     })
+
+    router.post
 
     router.get('/new',(req,res)=>{
         Book.find().collation({'locale':'en'}).sort({year:-1}).then((err,result)=>{
