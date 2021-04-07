@@ -19,6 +19,16 @@ module.exports = function (router) {
         res.send(Date.now().toString());
     })
 
+    router.get('/fetchauthors',(req,res)=>{
+        Book.distinct("author").then((err,result)=>{
+            if (err) return res.status(400).json(err)
+            if (s==null) {
+                return res.status(400).json(err)
+            }
+            res.send(result);
+        });
+    })
+
 
     router.put('/update/:id', function(req, res) {
         var bookId = req.params.id;
@@ -49,7 +59,28 @@ module.exports = function (router) {
         });
     })
 
-    router.post
+    router.get("/filter",(req,res)=>{
+        let category=""
+        let author=""
+        if(req.query.category)
+            category=req.query.category
+        if(req.query.author)
+            author=req.query.author
+
+        Book.find(
+            {$and:[
+                {"author":{'$regex': author,$options:'i'}},
+                {"category":{'$regex': category,$options:'i'}},
+            ]}
+        ).collation({'locale':'en'}).then((err,s)=>{
+            if (s==null) {
+                return res.status(400).json(err)
+            }
+            res.send(s);
+        });
+    })
+
+
 
     router.get('/new',(req,res)=>{
         Book.find().collation({'locale':'en'}).sort({year:-1}).then((err,result)=>{
