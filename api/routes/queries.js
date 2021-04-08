@@ -116,6 +116,8 @@ module.exports = function (router) {
                 {"author":{'$regex': req.params.id,$options:'i'}},
                 {"title":{'$regex': req.params.id,$options:'i'}},
                 {"year":{'$regex': req.params.id,$options:'i'}},
+                {"publisher":{'$regex': req.params.id,$options:'i'}},
+                {"category":{'$regex': req.params.id,$options:'i'}},
             ]}
         ).collation({'locale':'en'}).then((err,s)=>{
             if (s==null) {
