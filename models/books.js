@@ -8,6 +8,7 @@ const bookSchema = new mongoose.Schema({
     rating: { type: Number},
     publisher:{type:String},
     category:{type:String},
+    bookUrl:{type:String},
     createOn: { type: Date, default: Date.now }
 })
 
