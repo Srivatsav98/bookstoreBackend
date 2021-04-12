@@ -62,12 +62,12 @@ module.exports = function (router) {
     router.get("/filter",(req,res)=>{
         let category=""
         let author=""
-        if(req.query.category)
+        if(req.query.category) 
             category=req.query.category
         if(req.query.author)
             author=req.query.author
 
-        Book.find(
+            Book.find(
             {$and:[
                 {"author":{'$regex': author,$options:'i'}},
                 {"category":{'$regex': category,$options:'i'}},
